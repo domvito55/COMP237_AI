@@ -29,17 +29,17 @@ class TreePlot:
         """
         
         # assign hex color
-        if node.state.place == currentNode.state.place:
+        if node.state.name == currentNode.state.name:
             color = "#ee0011"
-        elif node.fringe:
+        elif node.frontier:
             color = "#0011ee"
         else:
             color = "#00ee11"
             
         #create node
         parentGraphNode = pydot.Node(str(self.index) + " " + \
-            node.state.place, style="filled", \
-            fillcolor = color, xlabel = node.heuristic)
+            node.state.name, style="filled", \
+            fillcolor = color)
         self.index += 1
         
         #add node

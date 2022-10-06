@@ -15,6 +15,9 @@ class Node:
         self.depth = 0
         self.children = []
         self.parent = None
+        ####____ Requirement 3 ____####
+        self.frontier = True
+
         
         
     def addChild(self, childNode):
@@ -27,7 +30,7 @@ class Node:
         
     
     def printTree(self):
-        """
+        """ 
         This method prints the tree
         """
         print (self.depth , " - " , self.state.name)

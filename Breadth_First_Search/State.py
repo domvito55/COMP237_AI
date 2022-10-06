@@ -1,8 +1,8 @@
 '''
 @author: Devangini Patel
-'''
 
-from GraphData import *
+edited by Matheus.
+'''
 
 class State:
     '''
@@ -20,21 +20,20 @@ class State:
         """
         This method returns me.
         """
-        initialState = "Dev"
+        initialState = "Matheus"
         return initialState
 
-
-    def successorFunction(self):
+    ####____ Requirement 5 ____####
+    def successorFunction(self, connections):  #___edited
         """
         This is the successor function. It finds all the persons connected to the
         current person
         """
         return connections[self.name]
         
-        
-    def checkGoalState(self):
+    ####____ Requirement 5 ____####
+    def checkGoalState(self, goalName): #____edited
         """
-        This method checks whether the person is Jill.
+        This method checks whether the person is the input goal.
         """ 
-        #check if the person's name is Jill
-        return self.name == "Jill"
+        return self.name == goalName #____edited
