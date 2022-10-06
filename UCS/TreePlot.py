@@ -9,11 +9,14 @@ class TreePlot:
     """
     This class creates tree plot for search tree
     """
+    counter = 0 #added just to make possible save more the one image
     
     def __init__(self):
         """
         Constructor
         """
+        TreePlot.counter += 1 #added just to make possible save more the one image
+
         self.graph = pydot.Dot(graph_type='graph', dpi = 300)
         self.index = 0
         
@@ -24,7 +27,9 @@ class TreePlot:
         Similar to printTree() of Node class
         """
         
-        if node.state.place == currentNode.state.place:
+        # As the are multiples paths to the same node, I have add the "and condition"
+        # so the plot will only color red the node in the minimum path
+        if (node.costFromRoot == currentNode.costFromRoot) and (node.state.place == currentNode.state.place):
             color = "#ee0011"
         elif node.fringe:
             color = "#0011ee"
@@ -32,9 +37,11 @@ class TreePlot:
             color = "#00ee11"
             
         #create node
+        # USC looks only to the coast not the heuristic.
         parentGraphNode = pydot.Node(str(self.index) + " " + \
             node.state.place, style="filled", \
-            fillcolor = color, xlabel = node.heuristic)
+            fillcolor = color, xlabel = node.costFromRoot)
+        # print(node.state.place, node.costFromRoot)
         self.index += 1
         
         #add node
@@ -60,8 +67,9 @@ class TreePlot:
         self.createGraph(rootNode, currentNode)
         
         #show the diagram
-        self.graph.write_png('graph.png')
-        img=mpimg.imread('graph.png')
+        #changed to make possible save more the one image
+        self.graph.write_png('graph' + str(TreePlot.counter) + '.png')
+        img=mpimg.imread('graph' + str(TreePlot.counter) + '.png')
         plt.imshow(img)
         plt.axis('off')
 #        mng = plt.get_current_fig_manager()

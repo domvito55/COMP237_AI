@@ -1,19 +1,22 @@
 '''
 @author: Devangini Patel
+edited by Matheus
 '''
+#I have changed the entries to list instead of sets.
+#This change increases acurancy during the print of the tree
 
 #connections between places
 connections = {}
-connections["Bus Stop"] = {"Library"}
-connections["Library"] = {"Bus Stop", "Car Park", "Student Center"}
-connections["Car Park"] = {"Library", "Maths Building", "Store"}
-connections["Maths Building"] = {"Car Park", "Canteen"}
-connections["Student Center"] = {"Library", "Store" , "Theater"}
-connections["Store"] = {"Student Center", "Car Park", "Canteen", "Sports Center"}
-connections["Canteen"] = {"Maths Building", "Store", "AI Lab"}
-connections["AI Lab"] = {"Canteen"}
-connections["Theater"] = {"Student Center", "Sports Center"}
-connections["Sports Center"] = {"Theater", "Store"}
+connections["Bus Stop"] = ["Library"]
+connections["Library"] = ["Bus Stop", "Car Park", "Student Center"]
+connections["Car Park"] = ["Library", "Maths Building", "Store"]
+connections["Maths Building"] = ["Car Park", "Canteen"]
+connections["Student Center"] = ["Library", "Store" , "Theater"]
+connections["Store"] = ["Student Center", "Car Park", "Canteen", "Sports Center"]
+connections["Canteen"] = ["Maths Building", "Store", "AI Lab"]
+connections["AI Lab"] = ["Canteen"]
+connections["Theater"] = ["Student Center", "Sports Center"]
+connections["Sports Center"] = ["Theater", "Store"]
 
 #location of all the places
 

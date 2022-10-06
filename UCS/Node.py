@@ -9,11 +9,23 @@ class Node:
     '''
     This class represents a node in the search tree
     '''
-    
+    # this is responsible for the count
+    # Lines 14 to 28 are addicions to help the Priority Queue
+    # solve which node has higher priority if there is a tie
+    # on their distances. The older node will have higher preference
+    counter = 0
+
+    def __lt__(self, other):
+        if self.id<other.id:
+           return self
+
     def __init__(self, state, parentNode):
         """
         Constructor
         """
+        Node.counter += 1
+        self.id = Node.counter
+
         self.state = state
         self.depth = 0
         self.children = []
@@ -22,8 +34,6 @@ class Node:
         self.fringe = True
         #self.costFromRoot
         self.computeCost()
-        #self.heuristic
-        self.computeHeuristic()
         
         
     def setParent(self, parentNode):
@@ -75,26 +85,12 @@ class Node:
         
         if self.parent != None:
             #find distance from current node to parent
-            distance = self.computeDistance(location[self.state.place], \
-                location[self.parent.state.place])
+            #I have added the round fuction to make a cleaner plot.
+            distance = round(self.computeDistance(location[self.state.place], \
+                location[self.parent.state.place]),1)
             #cost = parent cost + distance
             self.costFromRoot = self.parent.costFromRoot + distance
         else:
             self.costFromRoot = 0
     
         
-    def computeHeuristic(self):
-        """
-        This function computes the heuristic value of node
-        """
-        
-        #find the distance of this state from goal state
-        goalLocation = location["AI Lab"]
-        currentLocation = location[self.state.place]
-        distanceFromGoal = self.computeDistance(goalLocation, currentLocation)
-        
-        #add them up to form heuristic value
-        heuristic = self.costFromRoot + distanceFromGoal
-        
-        print ("heuristic for", self.state.place, "=", self.costFromRoot, distanceFromGoal, heuristic)
-        self.heuristic = heuristic

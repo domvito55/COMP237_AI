@@ -7,13 +7,15 @@ import queue
 from TreePlot import TreePlot
     
 
-def performAStarSearch():
+def UCS():
     """
     This method performs A* search
     """
     
     #create queue
     pqueue = queue.PriorityQueue()
+    #To create visited list
+    visited = [] 
     
     #create root node
     initialState = State()
@@ -24,19 +26,31 @@ def performAStarSearch():
     treeplot.generateDiagram(root, root)
     
     #add to priority queue
-    pqueue.put((root.heuristic, root))
+    #ignoring the heuristic, looking to cost only
+    pqueue.put((root.costFromRoot, root))
     
     #check if there is something in priority queue to dequeue
     while not pqueue.empty(): 
+        # print("###############################") #debug purposes
         
         #dequeue nodes from the priority Queue
         _, currentNode = pqueue.get()
+
+        #If the node was already visited, skip this one
+        #This helps to keep a clean plot, if you already foud
+        #a minimum path to a node, you don't need to add it to
+        #another branch of the tree
+        if currentNode.state.place in visited:
+            continue
+
+        visited.append(currentNode.state.place)
         
         #remove from the fringe
         currentNode.fringe = False
         
+        
         #check if it has goal State
-        print ("-- dequeue --", currentNode.state.place)
+        # print ("-- dequeue --", currentNode.state.place) #debug purposes
         
         #check if this is goal state
         if currentNode.state.checkGoalState():
@@ -53,12 +67,24 @@ def performAStarSearch():
             
         #get the child nodes 
         childStates = currentNode.state.successorFunction()
+        # print ("-- childstates", childStates) #debug purposes
+        # print ("-- visited", visited) #debug purposes
+
+        
         for childState in childStates:
+            # print(childState) #debug purposes
             
-            childNode = Node(State(childState), currentNode)
-            
-            #add to tree and queue
-            pqueue.put((childNode.heuristic, childNode))
+            #Logic complementing the lines 43 and 44
+            #If the node was already visited, skip this one
+            #This helps to keep a clean plot, if you already foud
+            #a minimum path to a node, you don't need to add it to
+            #another branch of the tree
+            if childState not in visited:
+                childNode = Node(State(childState), currentNode)
+                
+                #add to tree and queue
+                # print((childNode.costFromRoot, childNode))
+                pqueue.put((childNode.costFromRoot, childNode))
             
         #show the search tree explored so far
         treeplot = TreePlot()
@@ -70,4 +96,4 @@ def performAStarSearch():
     print ("Tree")
     root.printTree()
     
-performAStarSearch()
+UCS()
